@@ -160,7 +160,7 @@
       // they give us the first column, from where the diagonal starts
       // row index will always be 0 in this func
       
-      this.attributes;
+      
       var count = 0;
       var j = majorDiagonalColumnIndexAtFirstRow;
       var n = this.get('n'); // === n
@@ -235,12 +235,67 @@
     //
     // test if a specific minor diagonal on this board contains a conflict
     hasMinorDiagonalConflictAt: function(minorDiagonalColumnIndexAtFirstRow) {
-      return false; // fixme
+      var count = 0;
+      var j = minorDiagonalColumnIndexAtFirstRow;
+      var n = this.get('n'); // === n
+      if (Math.abs(j) >= n - 1 || j === 0) {return false};
+      if (j >= 1){
+        for (var i = 0; i < n; i++) {
+          var curArr = this.get(i);
+          if(curArr[j] === 1){
+            count++;
+          } 
+          j = j - 1;
+          if (j < 0){
+            break;
+          }
+        }
+
+        if (count >= 2) {
+         return true;
+        } else {
+         return false;
+        }
+      } 
+       
+      else {
+          j = j * (-1);
+          var index = j;
+          for (var k = n - 1; k >= 0; k--){
+          var curArr = this.get(index);
+        
+          if (curArr[k] === 1) {
+            count++;
+          }
+          
+          index = index + 1;
+          if (index >= n) {
+            break;
+          }
+        } 
+        if (count >= 2) {
+         return true;
+        } else {
+         return false;
+        }      
+    }
+
     },
 
     // test if any minor diagonals on this board contain conflicts
     hasAnyMinorDiagonalConflicts: function() {
-      return false; // fixme
+      var n = this.get('n');
+      for (var i = n - 1; i > 0; i--) {
+        if (this.hasMinorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
+      for (var i = (-1) * n; i < 0; i++) {
+        if (this.hasMinorDiagonalConflictAt(i)){
+          return true;
+        }
+      }
+      return false;
     }
 
     /*--------------------  End of Helper Functions  ---------------------*/
