@@ -45,7 +45,7 @@ describe('Board', function() {
       [0, 0, 0, 0]
     ]);
   });
-
+   
   describe('Board with major diagonal conflicts', function() {
     verifyConflictTypes(['majorDiagonal', 'queens'], [
       [0, 1, 0, 0],
